@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		 http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
+		<bean id="flatFileWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+			<property name="resource" ref="outputResource" />
+			<property name="appendAllowed" value="true" />
+			<property name="lineAggregator">
+				<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+					<property name="delimiter" value=";"/>
+					<property name="fieldExtractor">
+						<bean  class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+							<property name="names" value="firstName,lastName,middleName" />
+						</bean>
+					</property>
+				</bean>
+			</property>
+			<property name="headerCallback" ref="headerCopier" />
+		</bean>
+		
+		
+		
+		
+		<bean id="headerCopier"	class="com.writer.HeaderCopyCallback" >
+			<constructor-arg value="FirstName;LastName;MiddleName"></constructor-arg>
+		</bean>
+		
+		<bean id="outputResource" class="org.springframework.core.io.ClassPathResource">
+				<constructor-arg type="java.lang.String"
+					value="data/headerSample/person.txt" />
+		</bean>
+		
+		<bean id="writerManager" class="com.flatfile.manager.FlatFileWriter">
+			<constructor-arg>
+				<bean class="com.flatfile.callback.FlatFileWriterTemplate">
+					<constructor-arg ref="flatFileWriter"></constructor-arg>
+				</bean>
+			</constructor-arg>
+		</bean>
+</beans>

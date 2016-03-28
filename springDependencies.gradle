@@ -1,0 +1,17 @@
+ext {
+	
+	
+	SPRING_CORE=["org.springframework:spring-context:$project.ext.springVersion",
+		"org.springframework:spring-context-support:$project.ext.springVersion",
+		"org.springframework:spring-web:$project.ext.springVersion",
+		"org.springframework.batch:spring-batch-core:$project.ext.springBatchVersion",
+		"org.springframework:spring-tx:$project.ext.springVersion",
+		"org.springframework:spring-oxm:$project.ext.springVersion",
+      "org.springframework:spring-jms:$project.ext.springBatchVersion"]
+	SPRING_INTEGRATION=["org.springframework.integration:spring-integration-file:$project.ext.springIntegrationVersion",
+		"org.springframework.integration:spring-integration-core:$project.ext.springIntegrationVersion",
+		"org.springframework.batch:spring-batch-integration:$project.ext.springBatchVersion"]
+   
+   SPRING_BATCH = 'org.springframework.batch:spring-batch-core:3.0.6.RELEASE'
+   SPRING_TEST="org.springframework:spring-test:$project.ext.springVersion"
+}
